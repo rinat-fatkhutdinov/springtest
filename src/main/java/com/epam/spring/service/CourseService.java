@@ -12,16 +12,16 @@ import java.util.Collection;
 public class CourseService {
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseRepository repository;
 
     public Course createCourse(String name) {
         Course newCourse = new Course(name);
-        Course savedCourse = courseRepository.save(newCourse);
+        Course savedCourse = repository.save(newCourse);
         return savedCourse;
     }
 
     public Collection<Course> getAllCourses() {
-        Iterable<Course> iterableCourses = courseRepository.findAll();
+        Iterable<Course> iterableCourses = repository.findAll();
         Collection<Course> courses = new ArrayList<Course>();
         iterableCourses.forEach(courses::add);
         return courses;
