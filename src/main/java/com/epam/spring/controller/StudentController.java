@@ -14,7 +14,7 @@ public class StudentController {
     private StudentService service;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Student create(@RequestBody String name, @RequestBody String last) {
+    public Student create(@RequestParam String name, @RequestParam String last) {
         return service.addStudent(name, last);
     }
 
