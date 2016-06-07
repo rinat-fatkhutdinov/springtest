@@ -3,10 +3,7 @@ package com.epam.spring.controller;
 import com.epam.spring.entity.Student;
 import com.epam.spring.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -22,9 +19,14 @@ public class StudentController {
     }
 
     @RequestMapping
-    public Collection<Student> get() {
+    public Collection<Student> getAll() {
         return service.getAll();
     }
 
+    @RequestMapping(value = "/{id}/{course_id}", method = RequestMethod.PUT)
+    public Student assignCourse(@PathVariable("id") Long StudentId, @PathVariable("course_id") Long courseId) {
+        Student student = service.assignCourseToStudent(courseId, StudentId);
+        return student;
+    }
 
 }

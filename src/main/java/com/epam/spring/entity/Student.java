@@ -1,6 +1,8 @@
 package com.epam.spring.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -15,6 +17,9 @@ public class Student {
 
     @Column(nullable = false)
     private String last;
+
+    @ManyToMany(mappedBy = "students")
+    private Set<Course> courses = new HashSet<>();
 
     public Student() {
     }
@@ -47,4 +52,13 @@ public class Student {
     public void setLast(String last) {
         this.last = last;
     }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.epam.spring.service;
 
+import com.epam.spring.entity.Course;
 import com.epam.spring.entity.Student;
+import com.epam.spring.repository.CourseRepository;
 import com.epam.spring.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,9 @@ public class StudentService {
 
     @Autowired
     private StudentRepository repository;
-    private Collection<Student> all;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     public Student addStudent(String name, String last) {
         Student student = new Student(name, last);
@@ -25,5 +29,13 @@ public class StudentService {
         Collection<Student> students = new ArrayList<Student>();
         iterableCourses.forEach(students::add);
         return students;
+    }
+
+    public Student assignCourseToStudent(Long courseId, Long studentId) {
+        Course course = courseRepository.findOne(courseId);
+        Student student = repository.findOne(studentId);
+        course.addStudent(student);
+        courseRepository.save(course);
+        return student;
     }
 }
