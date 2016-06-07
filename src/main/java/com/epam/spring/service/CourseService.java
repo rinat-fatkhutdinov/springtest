@@ -1,6 +1,7 @@
 package com.epam.spring.service;
 
 import com.epam.spring.entity.Course;
+import com.epam.spring.entity.Student;
 import com.epam.spring.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,10 @@ public class CourseService {
         Collection<Course> courses = new ArrayList<Course>();
         iterableCourses.forEach(courses::add);
         return courses;
+    }
+
+    public Collection<Student> getStudentsByCourseId(Long courseId) {
+        Course course = repository.findOne(courseId);
+        return course.getStudents();
     }
 }

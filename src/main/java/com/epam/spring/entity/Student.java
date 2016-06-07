@@ -1,5 +1,7 @@
 package com.epam.spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +20,7 @@ public class Student {
     @Column(nullable = false)
     private String last;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses = new HashSet<>();
 
@@ -61,4 +64,25 @@ public class Student {
         this.courses = courses;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Student student = (Student) o;
+
+        if (!id.equals(student.id)) return false;
+        if (!name.equals(student.name)) return false;
+        if (!last.equals(student.last)) return false;
+        return true;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + last.hashCode();
+        return result;
+    }
 }

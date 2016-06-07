@@ -18,7 +18,7 @@ public class Course {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "course_students",
             joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
@@ -58,5 +58,24 @@ public class Course {
 
     public void addStudent(Student student) {
         students.add(student);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Course course = (Course) o;
+
+        if (!id.equals(course.id)) return false;
+        return name.equals(course.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        return result;
     }
 }
